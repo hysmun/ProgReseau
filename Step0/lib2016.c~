@@ -1,0 +1,102 @@
+#include "lib2016.h"
+
+int Recherche(char* NomFichier,int Reference ,struct Seance *UnRecord)
+{
+ FILE *sortie ;
+ char Tampon[80] ;
+ int  nbr ;
+ int  cr ;
+
+ sortie = fopen(NomFichier,"r") ; /* Si le fichier existe, on le cree sinon on ajoute */
+ if ( sortie == NULL )
+    {
+     fprintf(stderr,"Echec Ouverture\n") ;
+     exit(0) ;
+    }
+ else
+    fprintf(stderr,"Ouverture reussie \n") ;
+
+ nbr = fread(UnRecord,sizeof(struct Seance),1,sortie) ;
+ 
+ while ( !feof(sortie) && UnRecord->Reference != Reference )
+ {
+  fprintf(stderr,"Reference lue %d et Position actuelle dans le fichier %ld\n",UnRecord->Reference,ftell(sortie)) ;
+  nbr = fread(UnRecord,sizeof(struct Seance),1,sortie) ;
+ } ;
+ if ( !feof(sortie) )
+      cr = 1 ;
+ else
+      cr = 0 ;
+ fclose(sortie) ;
+ return(cr) ;
+}
+
+int Reservation(char* NomFichier,int Reference ,int Quantite )
+{
+ FILE *sortie ;
+ char Tampon[80] ;
+ int  nbr ;
+ struct Seance UnRecord ;
+ int cr ;
+
+ sortie = fopen(NomFichier,"r+") ; /* Si le fichier existe, on le cree sinon on ajoute */
+ if ( sortie == NULL )
+    {
+     fprintf(stderr,"Echec Ouverture\n") ;
+     exit(0) ;
+    }
+ else
+    fprintf(stderr,"Ouverture reussie \n") ;
+
+ nbr = fread(&UnRecord,sizeof(struct Seance),1,sortie) ;
+ 
+ while ( !feof(sortie) && UnRecord.Reference != Reference )
+ {
+  fprintf(stderr,"Record lu %d et Position actuelle dans le fichier %ld\n",UnRecord.Reference,ftell(sortie)) ;
+  nbr = fread(&UnRecord,sizeof(struct Seance),1,sortie) ;
+ } ;
+ if ( !feof(sortie) )
+     {
+      fprintf(stderr," Trouve Reference %s \n",UnRecord.Film) ;
+      nbr = fseek(sortie,-sizeof(struct Seance),SEEK_CUR) ; /* On recule pour réécrire */
+      UnRecord.Places = UnRecord.Places - Quantite ;
+      if ( UnRecord.Places >= 0 )
+      {
+        nbr = fwrite(&UnRecord,sizeof(struct Seance),1,sortie) ;
+        fprintf(stderr,"Record Ecrits %d \n",nbr) ;
+        cr=1 ;
+      }
+      else
+         cr=0 ;
+     }
+ else
+    cr=0 ;
+ fclose(sortie) ;
+ return(cr) ;
+}
+
+
+int Facturation(char NomFichier[80], char NomClient[60], int Date,int Quantite,int Reference)
+{
+  struct Facture UneFacture ;
+  int nbr ;
+  FILE *sortie ;
+  sortie = fopen(NomFichier,"a") ; /* Si le fichier existe, on le cree sinon on ajoute */
+ if ( sortie == NULL )
+    {
+     fprintf(stderr,"Echec Ouverture\n") ;
+     exit(0) ;
+    }
+ else
+    fprintf(stderr,"Ouverture reussie \n") ;
+ fseek(sortie,0,SEEK_END) ;
+ UneFacture.NumeroFacturation = ftell( sortie ) / sizeof( struct Facture ) + 1 ;
+ strncpy(UneFacture.NomClient, NomClient, sizeof(UneFacture.NomClient)) ;
+ UneFacture.DateFacturation = Date ;
+ UneFacture.Places = Quantite ;
+ UneFacture.Reference = Reference ;
+ 
+ nbr = fwrite(&UneFacture,sizeof(struct Facture),1,sortie) ;
+ fclose(sortie) ;
+ return( UneFacture.NumeroFacturation ) ;
+}
