@@ -6,3 +6,4 @@
 
 void APropos(char *Version,char *Nom1,char* Nom2) ;
 int Recherche(char *NomFichier,int Reference,Seance *UnRecord);
+void AfficheLog(char *Message);
