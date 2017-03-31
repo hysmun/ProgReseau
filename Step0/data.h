@@ -11,6 +11,7 @@ struct Seance {
 	 int  Places ;
          int  Salle ;
          char Date[10] ;
+         char Realisateur[30];
 	} ;
 
 struct Facture
