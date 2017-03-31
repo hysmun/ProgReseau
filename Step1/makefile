@@ -1,6 +1,6 @@
 
 # Si SUN LIBS=-lsocket -lnsl
-
+TMP = "default"
 LIBS=
 all:	admin	lib2016BM.o	 
 
