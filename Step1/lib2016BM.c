@@ -18,6 +18,11 @@ void AfficheLog(char *Message)
 int Recherche(char* NomFichier, int Reference, Seance *UnRecord)
 {
 	//recherche d'un reccord dans le fichier 
+	if(NomFichier == NULL || Reference < 1)
+	{
+		AfficheLog("Erreur param Recherche()");
+		return -1;
+	}
 	int i, ret;
 	FILE *fp = fopen(NomFichier, "rb");
 	

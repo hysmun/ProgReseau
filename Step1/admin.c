@@ -43,7 +43,7 @@ void SaiSieRecord(struct Seance *UnRecord )
  UnRecord -> Reference = atoi(Tampon) ;
  printf("Saisie Film :") ;
  fgets(UnRecord->Film,sizeof UnRecord->Film,stdin ) ;
- printf("Saisie realisateur :") ;
+ printf("Saisie r :") ;
  fgets(UnRecord->Realisateur,sizeof UnRecord->Realisateur,stdin ) ;
  
  printf("Saisie Places :") ;
