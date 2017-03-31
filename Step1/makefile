@@ -13,4 +13,5 @@ admin:	data.h	admin.c	lib2016BM.o
 	echo "Compilation de admin"
 	gcc -o admin	admin.c  lib2016BM.o
 
-
+git:
+	cd .. ; make -f makefile git
