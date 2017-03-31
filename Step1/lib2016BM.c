@@ -9,11 +9,9 @@ void APropos(char *Version,char *Nom1,char* Nom2)
 
 void AfficheLog(char *Message)
 {
-	fprintf(stderr,"%s\n",*Message);
+	fprintf(stderr,"%s\n",Message);
 	return;
 }
-
-
 
 int Recherche(char* NomFichier, int Reference, Seance *UnRecord)
 {
