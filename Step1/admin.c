@@ -43,6 +43,9 @@ void SaiSieRecord(struct Seance *UnRecord )
  UnRecord -> Reference = atoi(Tampon) ;
  printf("Saisie Film :") ;
  fgets(UnRecord->Film,sizeof UnRecord->Film,stdin ) ;
+ printf("Saisie realisateur :") ;
+ fgets(UnRecord->Realisateur,sizeof UnRecord->Realisateur,stdin ) ;
+ 
  printf("Saisie Places :") ;
  fgets(Tampon,sizeof Tampon,stdin ) ;
  UnRecord -> Places = atoi(Tampon) ;
@@ -84,6 +87,7 @@ void AfficheRecord(struct Seance  *UnRecord)
  char Tampon[80] ;
  sprintf(Tampon,"%d",UnRecord->Reference ) ;  MonPrintf(Tampon,4,strlen(Tampon)) ;
  sprintf(Tampon,"%s",UnRecord->Film) ;    MonPrintf(Tampon,50,strlen(Tampon)) ;
+ sprintf(Tampon, "%s", UnRecord->Realisateur);   MonPrintf(Tampon,30,strlen(Tampon)) ;
  sprintf(Tampon,"%d",UnRecord->Places) ; MonPrintf(Tampon,4,strlen(Tampon)) ;
  printf("\n") ;
 }
