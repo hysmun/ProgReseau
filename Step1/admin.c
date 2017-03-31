@@ -214,6 +214,7 @@ int main()
    			 fflush(stdin);
    			 scanf("%d",&Numero);
    			 Recherche("Seances",Numero,&UnRecord);
+   			 break;
    case '5': ListingFacture("Facture") ;
 	     break ;
    case '6': APropos("Step 1","Brajkovic Antoine","Mauhin Remy") ;
