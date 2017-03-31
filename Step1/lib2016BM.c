@@ -21,13 +21,13 @@ int Recherche(char* NomFichier, int Reference, Seance *UnRecord)
 	int i, ret;
 	FILE *fp = fopen(NomFichier, "rb");
 	
-	if(fp == null)
+	if(fp == NULL)
 	{
-		printf("Erreur ouverture fichier");
-		UnRecord = null;
+		AfficheLog("Erreur ouverture fichier");
+		UnRecord = NULL;
 		return -1;
 	}
-	printf("Ouverture reussie");
+	AfficheLog("Ouverture reussie");
 	fseek(fp, 0, SEEK_SET);
 	
 	ret = fread(UnRecord, sizeof(Seance), 1, fp);
@@ -35,11 +35,13 @@ int Recherche(char* NomFichier, int Reference, Seance *UnRecord)
 	{
 		if(UnRecord->Reference == Reference)
 		{
-			printf("trouver");
+			AfficheLog("trouver");
 			return 1;
-		}				
+		}	
+		ret = fread(UnRecord, sizeof(Seance), 1, fp);			
 	}
-	
+	AfficheLog("Reccord non trouver");
+	return 0;
 }
 
 
