@@ -20,4 +20,4 @@ typedef struct Requete
 	char Film[80] ;
 	char NomClient[80] ;
 	char Realisateur[30];
-}Requete;
+}
