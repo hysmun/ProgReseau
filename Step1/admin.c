@@ -213,12 +213,12 @@ int main()
    case '3': printf("Saisie Reference:");
    			 fflush(stdin);
    			 scanf("%d",&Numero);
-   			 Recherche("Seances",Numero,&UnRecord);
+   			 RechercheBM("Seances",Numero,&UnRecord);
    			 AfficheRecord(&UnRecord);
    			 break;
    case '5': ListingFacture("Facture") ;
 	     break ;
-   case '6': APropos("Step 1","Brajkovic Antoine","Mauhin Remy") ;
+   case '6': AProposBM("Step 1","Brajkovic Antoine","Mauhin Remy") ;
              break ;
    
 	

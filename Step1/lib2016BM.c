@@ -1,24 +1,24 @@
 #include "lib2016BM.h"
 
-void APropos(char *Version,char *Nom1,char* Nom2)
+void AProposBM(char *Version,char *Nom1,char* Nom2)
 {
  printf("Version : %s \n",Version ) ;
  printf("Nom1 : %s \n",Nom1 ) ;
  printf("Nom2 : %s \n",Nom2 ) ;
 }
 
-void AfficheLog(char *Message)
+void AfficheLogBM(char *Message)
 {
 	fprintf(stderr,"%s\n",Message);
 	return;
 }
 
-int Recherche(char* NomFichier, int Reference, Seance *UnRecord)
+int RechercheBM(char* NomFichier, int Reference, Seance *UnRecord)
 {
 	//recherche d'un reccord dans le fichier 
 	if(NomFichier == NULL || Reference < 1)
 	{
-		AfficheLog("Erreur param Recherche()");
+		AfficheLogBM("Erreur param Recherche()");
 		return -1;
 	}
 	int i, ret;
@@ -26,11 +26,11 @@ int Recherche(char* NomFichier, int Reference, Seance *UnRecord)
 	
 	if(fp == NULL)
 	{
-		AfficheLog("Erreur ouverture fichier");
+		AfficheLogBM("Erreur ouverture fichier");
 		UnRecord = NULL;
 		return -1;
 	}
-	AfficheLog("Ouverture reussie");
+	AfficheLogBM("Ouverture reussie");
 	fseek(fp, 0, SEEK_SET);
 	
 	ret = fread(UnRecord, sizeof(Seance), 1, fp);
@@ -38,12 +38,12 @@ int Recherche(char* NomFichier, int Reference, Seance *UnRecord)
 	{
 		if(UnRecord->Reference == Reference)
 		{
-			AfficheLog("trouver");
+			AfficheLogBM("trouver");
 			return 1;
 		}	
 		ret = fread(UnRecord, sizeof(Seance), 1, fp);			
 	}
-	AfficheLog("Reccord non trouver");
+	AfficheLogBM("Reccord non trouver");
 	fclose(fp);
 	return 0;
 }
