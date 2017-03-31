@@ -5,7 +5,7 @@
 
 #define DATAH
 
-struct Seance 
+typedef struct Seance 
 { 
 	int Reference ;
 	char Film[60] ;
@@ -13,14 +13,14 @@ struct Seance
 	int  Salle ;
 	char Date[10] ;
 	char Realisateur[30];
-} ;
+}Seance;
 
-struct Facture
+typedef struct Facture
 {
 	int NumeroFacturation ;
 	char NomClient[60] ;
 	int DateFacturation ;
 	int Places ;
 	int Reference ;
-} ;  	
+}Facture;  	
 #endif
