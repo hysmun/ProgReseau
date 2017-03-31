@@ -158,8 +158,15 @@ void ListingFacture(char *NomFichier)
  fclose(sortie) ;
 }
 
+/****************************
+*
+*				MAIN
+*
+*
+*****************************
+*/
 
-main()
+int main()
 {
  char Choix ;
  char Tampon[80] ;
@@ -208,4 +215,13 @@ main()
    case '7': exit(0) ; 
   }
  }
+ return 1;
 }
+
+
+
+
+
+
+
+
