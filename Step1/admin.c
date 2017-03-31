@@ -214,6 +214,7 @@ int main()
    			 fflush(stdin);
    			 scanf("%d",&Numero);
    			 Recherche("Seances",Numero,&UnRecord);
+   			 AfficheRecord(&UnRecord);
    			 break;
    case '5': ListingFacture("Facture") ;
 	     break ;
