@@ -11,12 +11,7 @@
 #include "../udplib/udplib.h"
 #include "structure.h"
 
-
-void die(char *s)
-{
-    perror(s);
-    exit(1);
-}
+void die(char *s);
 
 int main(int argc,char *argv[])
 {
@@ -80,4 +75,10 @@ int main(int argc,char *argv[])
 
 	close(Desc) ;
 	return 1;
+}
+
+void die(char *s)
+{
+    perror(s);
+    exit(1);
 }

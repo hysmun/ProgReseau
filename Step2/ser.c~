@@ -12,12 +12,6 @@
 #include "structure.h"
 
 
-void die(char *s)
-{
-    perror(s);
-    exit(1);
-}
-
 int main(int argc,char *argv[])
 {
 	int rc ;
@@ -80,4 +74,10 @@ int main(int argc,char *argv[])
 
 	close(Desc) ;
 	return 1;
+}
+
+void die(char *s)
+{
+    perror(s);
+    exit(1);
 }
