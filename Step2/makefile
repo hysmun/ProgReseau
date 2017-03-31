@@ -3,7 +3,7 @@
 TMP = "default"
 LIBS=
 	
-all:admin cli ser udplib.o lib2016BM.o
+all:admin cli ser udplib.o lib2016BM.o utils.o
 lib2016BM.o: lib2016BM.c lib2016BM.h
 	echo "compilation de lib2016"
 	gcc -c lib2016BM.c data.h -Wall
@@ -19,6 +19,9 @@ cli: cli.c structure.h udplib.o
 ser: ser.c structure.h data.h udplib.o lib2016BM.o
 	echo "Compilation de serveur"
 	gcc -o ser ser.c udplib.o lib2016BM.o $(LIBS) -Wall
+utils.o:utils.c utils.h 
+	echo "Compilation utils.o"
+	gcc -o utils.o -c utils.c data.h -Wall
 	
 	
 	

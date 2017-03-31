@@ -1,8 +1,4 @@
-#ifdef DATAH
-
-#else
-
-
+#ifndef DATAH
 #define DATAH
 
 typedef struct Seance 

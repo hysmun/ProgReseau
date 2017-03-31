@@ -1,3 +1,5 @@
+#ifndef __STRUCTURE_H__
+#define __STRUCTURE_H__
 
 typedef enum TypeRequete 
 {
@@ -20,4 +22,6 @@ typedef struct Requete
 	char Film[80] ;
 	char NomClient[80] ;
 	char Realisateur[30];
-}
+}Requete;
+
+#endif

@@ -9,6 +9,7 @@
 #include <string.h>
 #include "../udplib/udplib.h"
 #include "structure.h"
+#include "utils.h"
 
 void die(char *s)
 {
@@ -62,7 +63,7 @@ int main(int argc, char *argv[])
 
 
 	UneRequete.Type = Question ; 
-	strncpy(UneRequete.Message , "Avec une structure: Bonjour" , sizeof(UneRequete.Message)) ;
+	
 
 	rc = SendDatagram(Desc,&UneRequete,sizeof(struct Requete) ,&sos ) ;
 
@@ -78,7 +79,7 @@ int main(int argc, char *argv[])
 	if ( rc == -1 )
 		die("ReceiveDatagram") ;
 	else
-		fprintf(stderr,"bytes recus:%d:%s\n",rc,UneRequete.Message ) ;
+		fprintf(stderr,"bytes recus:%d\n",rc) ;
 
 	close(Desc) ;
 	return 1;
