@@ -8,7 +8,7 @@
 typedef struct Seance 
 { 
 	int Reference ;
-	char Film[80] ;
+	char Film[60] ;
 	int  Places ;
 	int  Salle ;
 	char Date[10] ;
