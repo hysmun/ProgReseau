@@ -3,7 +3,7 @@
 TMP = "default"
 LIBS=
 	
-all:admin cli ser udplib.o lib2016BM.o utils.o
+all:udplib.o lib2016BM.o utils.o admin cli ser 
 lib2016BM.o: lib2016BM.c lib2016BM.h
 	echo "compilation de lib2016"
 	gcc -c lib2016BM.c data.h -Wall
@@ -21,14 +21,18 @@ ser: ser.c structure.h data.h udplib.o lib2016BM.o
 	gcc -o ser ser.c udplib.o lib2016BM.o $(LIBS) -Wall
 utils.o:utils.c utils.h 
 	echo "Compilation utils.o"
-	gcc -o utils.o -c utils.c data.h -Wall
+	gcc -o utils.o -c utils.c -Wall
 	
 	
 	
 	
 clean:
+	clear
+	clear
 	echo "clean"
 	rm -f *.o admin cli ser
 
 git:
+	clear
+	clear
 	cd .. ; make -f makefile git
