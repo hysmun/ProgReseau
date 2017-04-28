@@ -24,7 +24,23 @@ utils.o:utils.c utils.h
 	gcc -o utils.o -c utils.c -Wall
 	
 	
-	
+
+ser:
+	./ser 127.0.0.1 1300
+
+cli:
+	./cli 127.0.0.1 1400 127.0.0.1 1300
+
+cli1:
+	./cli 127.0.0.1 1401 127.0.0.1 1300
+
+cli2:
+	./cli 127.0.0.1 1402 127.0.0.1 1300
+
+cli3:
+	./cli 127.0.0.1 1403 127.0.0.1 1300
+
+
 	
 clean:
 	clear
