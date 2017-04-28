@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
 	else
 	{
 		fprintf(stderr,"bytes recus:%d\n",rc) ;
-		fprintf(stderr,"Film:%s /t Realisateur:%s/n",UneRequete.Film,UneRequete.Realisateur);
+		fprintf(stderr,"Film:%s\t\tRealisateur:%s/n",UneRequete.Film,UneRequete.Realisateur);
 	}	
 
 	close(Desc) ;
