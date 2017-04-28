@@ -4,6 +4,7 @@ TMP = "default"
 LIBS=
 	
 all:udplib.o lib2016BM.o utils.o admin cli ser 
+
 lib2016BM.o: lib2016BM.c lib2016BM.h
 	echo "compilation de lib2016"
 	gcc -c lib2016BM.c data.h -Wall
@@ -25,10 +26,10 @@ utils.o:utils.c utils.h
 	
 	
 
-ser:
+ser0:
 	./ser 127.0.0.1 1300
 
-cli:
+cli0:
 	./cli 127.0.0.1 1400 127.0.0.1 1300
 
 cli1:
