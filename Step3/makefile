@@ -16,7 +16,7 @@ udplib.o:../udplib/udplib.h
 	gcc -c ../udplib/udplib.c ../udplib/udplib.c
 cli: cli.c structure.h udplib.o utils.o
 	echo "Compilation de client"
-	gcc -o cli cli.c udplib.o $(LIBS) -Wall
+	gcc -o cli cli.c udplib.o utils.o $(LIBS) -Wall
 ser: ser.c structure.h data.h udplib.o lib2016BM.o utils.o
 	echo "Compilation de serveur"
 	gcc -o ser ser.c udplib.o lib2016BM.o utils.o $(LIBS) -Wall

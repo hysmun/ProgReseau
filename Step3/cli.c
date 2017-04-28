@@ -22,7 +22,8 @@ int main(int argc, char *argv[])
 	int rc ;
 	int Desc ;
 	int tm ;
-	int choix;
+	int choix = '0';
+	int i=0;
 
 	u_long  IpSocket , IpServer;
 	u_short PortSocket, PortServer ; 
@@ -65,31 +66,53 @@ int main(int argc, char *argv[])
 	sos.sin_port = htons(PortServer) ;
 	/* Début partie modifée */
 
-	UneRequete.Type = Question;
-	printf("Saisie numero de seance : ");
-	scanf("%d",&choix);
-	UneRequete.Reference = choix;
-		
-	/* Fin partie modifée*/
-
-	rc = SendDatagram(Desc,&UneRequete,sizeof(struct Requete) ,&sos ) ;
-
-	if ( rc == -1 )
-		die("SendDatagram") ;
-	else
-		fprintf(stderr,"Envoi de %d bytes\n",rc ) ;
-
-	memset(&UneRequete,0,sizeof(struct Requete)) ;
-	tm = sizeof(struct Requete) ;
-
-	rc = ReceiveDatagram( Desc, &UneRequete,tm, &sor ) ;
-	if ( rc == -1 )
-		die("ReceiveDatagram") ;
-	else
+	while(choix != 'q')
 	{
-		fprintf(stderr,"bytes recus:%d\n",rc) ;
-		fprintf(stderr,"Film:%s\t\tRealisateur:%s\n",UneRequete.Film,UneRequete.Realisateur);
-	}	
+		printf("----------------------    %d\n", i) ;
+		printf("1)demander une reference\n");
+		printf("6) A propos           \n") ;
+		printf("7) exit               \n") ; 
+		printf("----------------------\n") ; 
+		choix=ReadChar() ;
+		switch(choix)
+		{
+			case '1':
+				UneRequete.Type = Question;
+				printf("Saisie numero de seance : ");
+				scanf("%d",&choix);
+				UneRequete.Reference = choix;
+				break;
+			case '6':
+				break;
+			case '7':
+				choix = 'q';
+				break;
+		}
+		
+		/* Fin partie modifée*/
+		if(choix != 'q')
+		{
+			rc = SendDatagram(Desc,&UneRequete,sizeof(struct Requete) ,&sos ) ;
+
+			if ( rc == -1 )
+				die("SendDatagram") ;
+			else
+				fprintf(stderr,"Envoi de %d bytes\n",rc ) ;
+
+			memset(&UneRequete,0,sizeof(struct Requete)) ;
+			tm = sizeof(struct Requete) ;
+
+			rc = ReceiveDatagram( Desc, &UneRequete,tm, &sor ) ;
+			if ( rc == -1 )
+				die("ReceiveDatagram") ;
+			else
+			{
+				fprintf(stderr,"bytes recus:%d\n",rc) ;
+				fprintf(stderr,"Film:%s\t\tRealisateur:%s\n",UneRequete.Film,UneRequete.Realisateur);
+			}
+		}
+		i++;
+	}
 
 	close(Desc) ;
 	return 1;

@@ -15,6 +15,8 @@ void DelNewLine(char *Chaine)
 
 char ReadChar()
 {
+fflush(stdin);
+fflush(stdout);
  char Tampon[80] ;
  fgets(Tampon,sizeof Tampon,stdin ) ;
  return Tampon[0] ;
@@ -30,6 +32,7 @@ void MonPrintf(char* tempo, int espace,int taille )
        printf(" ");
        Count-- ;
  }
+ fflush(stdout);
 }
 
 
@@ -53,6 +56,7 @@ void SaiSieRecord(struct Seance *UnRecord )
  printf("%s\n",UnRecord->Film) ;
  printf("%d\n",UnRecord->Places ) ;
  printf("-----------------------\n") ;
+ fflush(stdout);
  return ;
 }
 
@@ -78,6 +82,7 @@ void CreationAjoutFichier(char *NomFichier,struct Seance  *UnRecord )
 	fwrite(UnRecord,sizeof(struct Seance ),1,sortie) ;
 	fflush(sortie) ;
 	fclose(sortie) ;
+	fflush(stdout);
 }
 
 void AfficheRecord(struct Seance  *UnRecord)
@@ -88,6 +93,7 @@ void AfficheRecord(struct Seance  *UnRecord)
  sprintf(Tampon, "%s", UnRecord->Realisateur);   MonPrintf(Tampon,30,strlen(Tampon)) ;
  sprintf(Tampon,"%d",UnRecord->Places) ; MonPrintf(Tampon,4,strlen(Tampon)) ;
  printf("\n") ;
+ fflush(stdout);
 }
 
 void AfficheFacture(struct Facture *UneFacture)
@@ -100,6 +106,7 @@ void AfficheFacture(struct Facture *UneFacture)
  sprintf(Tampon,"%d",UneFacture->DateFacturation ) ; MonPrintf(Tampon,8,strlen(Tampon)) ;
  
  printf("\n") ;
+ fflush(stdout);
 }
 
 void Listing(char *NomFichier)
@@ -129,6 +136,7 @@ void Listing(char *NomFichier)
 		nbr = fread(&UnRecord,sizeof(UnRecord),1,sortie) ;
 	}
 	fclose(sortie) ;
+	fflush(stdout);
 }
 
 void ListingFacture(char *NomFichier)
@@ -158,4 +166,5 @@ void ListingFacture(char *NomFichier)
 		nbr = fread(&UneFacture,sizeof(struct Facture),1,sortie) ;
 	}
 	fclose(sortie) ;
+	fflush(stdout);
 }
