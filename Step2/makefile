@@ -52,7 +52,7 @@ clean:
 git:
 	clear
 	clear
-	cd .. ; make -f makefile git
+	cd .. ; make -f makefile git TMP
 
 pull:
 	clear
