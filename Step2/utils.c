@@ -114,7 +114,7 @@ void Listing(char *NomFichier)
 	if ( sortie == NULL )
 	{
 		fprintf(stderr,"Echec Ouverture\n") ;
-		exit(0) ;
+		return;
 	}
 	else
 		fprintf(stderr,"Ouverture reussie \n") ;
