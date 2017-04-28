@@ -73,11 +73,13 @@ int main(int argc, char *argv[])
 		printf("6) A propos           \n") ;
 		printf("7) exit               \n") ; 
 		printf("----------------------\n") ;
+		fflush(stdin);
 		choix=ReadChar() ;
 		switch(choix)
 		{
 			case '1':
 				UneRequete.Type = Question;
+				fflush(stdin);
 				printf("Saisie numero de seance : ");
 				
 				scanf("%d",&choix);
