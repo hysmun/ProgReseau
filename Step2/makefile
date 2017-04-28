@@ -42,7 +42,6 @@ cli3:
 	./cli 127.0.0.1 1403 127.0.0.1 1300
 
 
-	
 clean:
 	clear
 	clear
