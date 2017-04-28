@@ -24,7 +24,6 @@ utils.o:utils.c utils.h
 	echo "Compilation utils.o"
 	gcc -o utils.o -c utils.c -Wall
 	
-	
 
 ser0:
 	./ser 127.0.0.1 1300
@@ -40,7 +39,6 @@ cli2:
 
 cli3:
 	./cli 127.0.0.1 1403 127.0.0.1 1300
-
 
 clean:
 	clear
