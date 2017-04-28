@@ -73,11 +73,13 @@ int main(int argc, char *argv[])
 		printf("6) A propos           \n") ;
 		printf("7) exit               \n") ; 
 		printf("----------------------\n") ;
+		fflush(stdin);
 		choix=ReadChar() ;
 		switch(choix)
 		{
 			case '1':
 				UneRequete.Type = Question;
+				fflush(stdin);
 				printf("Saisie numero de seance : ");
 				
 				scanf("%d",&choix);
@@ -109,19 +111,10 @@ int main(int argc, char *argv[])
 			else
 			{
 				fprintf(stderr,"bytes recus:%d\n",rc) ;
-				switch((int)UneRequete.Type)
-				{
-					case OK:
-						fprintf(stderr,"Film:%s\t\tRealisateur:%s\n",UneRequete.Film,UneRequete.Realisateur);
-						break;
-					case Fail:
-						printf("\n\n ERROR fail serv\n\n");
-						break;
-				}
+				fprintf(stderr,"Film:%s\t\tRealisateur:%s\n",UneRequete.Film,UneRequete.Realisateur);
 			}
 		}
 		i++;
-		UneRequete.Type = Fail;
 	}
 
 	close(Desc) ;
