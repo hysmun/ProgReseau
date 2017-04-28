@@ -64,7 +64,7 @@ int main(int argc,char *argv[])
 		printf("Type recu %d\n", UneRequete.Type) ;
 		res = Recherche("Seances",UneRequete.Reference,&UneSeance);
 		if(res == 1)
-			fprintf(stderr,"res:%d -- Reference:%s",res,UneRequete.Film);
+			fprintf(stderr,"res:%d -- Reference:%s",res,UneSeance.Film);
 		else
 			exit(1);
 		/* attention l'enum peut être codé en short */
