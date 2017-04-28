@@ -20,6 +20,7 @@ int main(int argc,char *argv[])
 	int rc ;
 	int Desc ;
 	int res;
+	int send = 0;
 	struct sockaddr_in sthis ; /* this ce programme */
 	struct sockaddr_in sos ; /* s = serveur */
 	struct sockaddr_in sor ; /* r = remote */
@@ -60,28 +61,44 @@ int main(int argc,char *argv[])
 			die("ReceiveDatagram") ;
 		else
 			fprintf(stderr,"bytes recus:%d Reference :%d\n",rc,UneRequete.Reference ) ;
-
-		printf("Type recu %d\n", UneRequete.Type) ;
-		res = Recherche("Seances",UneRequete.Reference,&UneSeance);
-		if(res == 1)
-			fprintf(stderr,"res:%d -- Reference:%s\n",res,UneSeance.Film);
-		else
-			exit(1);
+		send = 0;
+		switch((int)UneRequete.Type)
+		{
+			case Question:
+				printf("Type recu %d\n", UneRequete.Type) ;
+				res = Recherche("Seances",UneRequete.Reference,&UneSeance);
+				if(res == 1)
+					fprintf(stderr,"res:%d -- Reference:%s\n",res,UneSeance.Film);
+				else
+					exit(1);
+				UneRequete.Type = OK ;
+				strcpy(UneRequete.Film,UneSeance.Film);
+				strcpy(UneRequete.Realisateur,UneSeance.Realisateur);
+				send = 1;
+				break;
+			case Fail:
+				UneRequete.Type = Fail ;
+				printf("\n\n ERROR envois de FAIL \n\n");
+				send = 1;
+				break;
+		}
+		
 		/* attention l'enum peut être codé en short */
 		/* reponse avec psos */
 
 		/* Début partie modifiée*/
 		
-		UneRequete.Type = OK ;
-		strcpy(UneRequete.Film,UneSeance.Film);
-		strcpy(UneRequete.Realisateur,UneSeance.Realisateur);
+		
 		
 		/* Fin partie modifiée*/
-		rc = SendDatagram(Desc,&UneRequete,sizeof(struct Requete) ,&sor ) ;
-		if ( rc == -1 )
-			die("SendDatagram:") ;
-		else
-			fprintf(stderr,"bytes envoyes:%d\n",rc ) ;
+		if(send == 1)
+		{
+			rc = SendDatagram(Desc,&UneRequete,sizeof(struct Requete) ,&sor ) ;
+			if ( rc == -1 )
+				die("SendDatagram:") ;
+			else
+				fprintf(stderr,"bytes envoyes:%d\n",rc ) ;
+		}
 
 	}
 

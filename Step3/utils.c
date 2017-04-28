@@ -19,6 +19,8 @@ fflush(stdin);
 fflush(stdout);
  char Tampon[80] ;
  fgets(Tampon,sizeof Tampon,stdin ) ;
+ fflush(stdin);
+fflush(stdout);
  return Tampon[0] ;
 } 
 

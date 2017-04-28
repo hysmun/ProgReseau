@@ -112,6 +112,7 @@ int main(int argc, char *argv[])
 			}
 		}
 		i++;
+		UneRequete.Type = Fail;
 	}
 
 	close(Desc) ;
