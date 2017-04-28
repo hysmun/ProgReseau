@@ -220,7 +220,7 @@ int main()
 				ListingFacture("Facture") ;
 				break ;
 			case '6': 
-				APropos("Step 1","Brajkovic Antoine","Mauhin Remy") ;
+				APropos("Step 2","Brajkovic Antoine","Mauhin Remy") ;
 				break ;
 			case '7': 
 				exit(0) ; 

@@ -2,15 +2,15 @@
 # Si SUN LIBS=-lsocket -lnsl
 
 LIBS=
-all:	admin	lib2016HV.o	 
+all:	admin	lib2016BM.o	 
 
 
-lib2016HV.o:	lib2016HV.c	lib2016HV.h	data.h	
+lib2016BM.o:	lib2016HV.c	lib2016BM.h	data.h	
 	echo "compilation de lib2016"
-	cc -c lib2016HV.c
+	gcc -c lib2016BM.c
 
-admin:	data.h	admin.c	lib2016HV.o		
+admin:	data.h	admin.c	lib2016BM.o		
 	echo "Compilation de admin"
-	cc -o admin	admin.c  lib2016HV.o
+	gcc -o admin	admin.c  lib2016BM.o
 
 

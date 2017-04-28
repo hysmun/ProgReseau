@@ -52,31 +52,38 @@ int main(int argc,char *argv[])
 		die("CreateSockets:") ;
 	else
 		fprintf(stderr,"CreateSockets %d\n",Desc) ;
+	while(1)
+	{
+		tm = sizeof(struct Requete) ;
+		rc = ReceiveDatagram( Desc,&UneRequete ,tm, &sor ) ;
+		if ( rc == -1 )
+			die("ReceiveDatagram") ;
+		else
+			fprintf(stderr,"bytes recus:%d Reference :%d\n",rc,UneRequete.Reference ) ;
 
-	tm = sizeof(struct Requete) ;
-	rc = ReceiveDatagram( Desc,&UneRequete ,tm, &sor ) ;
-	if ( rc == -1 )
-		die("ReceiveDatagram") ;
-	else
-		fprintf(stderr,"bytes recus:%d Reference :%d\n",rc,UneRequete.Reference ) ;
+		printf("Type recu %d\n", UneRequete.Type) ;
+		res = Recherche("Seances",UneRequete.Reference,&UneSeance);
+		if(res == 1)
+			fprintf(stderr,"res:%d -- Reference:%s",res,UneRequete.Film);
+		else
+			exit(1);
+		/* attention l'enum peut être codé en short */
+		/* reponse avec psos */
 
-	printf("Type recu %d\n", UneRequete.Type) ;
-	res = Recherche("Seances",UneRequete.Reference,&UneSeance);
-	if(res == 1)
-		fprintf(stderr,"res:%d -- Reference:%s",res,UneRequete.Film);
-	else
-		exit(1);
-	/* attention l'enum peut être codé en short */
-	/* reponse avec psos */
+		/* Début partie modifiée*/
+		
+		UneRequete.Type = OK ;
+		strcpy(UneRequete.Film,UneSeance.Film);
+		strcpy(UneRequete.Realisateur,UneSeance.Realisateur);
+		
+		/* Fin partie modifiée*/
+		rc = SendDatagram(Desc,&UneRequete,sizeof(struct Requete) ,&sor ) ;
+		if ( rc == -1 )
+			die("SendDatagram:") ;
+		else
+			fprintf(stderr,"bytes envoyes:%d\n",rc ) ;
 
-	UneRequete.Type = OK ;
-	strcpy(UneRequete.Film,UneSeance.Film);
-	
-	rc = SendDatagram(Desc,&UneRequete,sizeof(struct Requete) ,&sor ) ;
-	if ( rc == -1 )
-		die("SendDatagram:") ;
-	else
-		fprintf(stderr,"bytes envoyes:%d\n",rc ) ;
+	}
 
 	close(Desc) ;
 	return 1;

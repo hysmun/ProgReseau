@@ -5,7 +5,7 @@ LIBS=
 all:	admin	lib2016BM.o	 
 
 
-lib2016BM.o:	lib2016HV.c	lib2016BM.h	data.h	
+lib2016BM.o:	lib2016BM.c	lib2016BM.h	data.h	
 	echo "compilation de lib2016"
 	gcc -c lib2016BM.c
 

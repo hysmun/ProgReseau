@@ -21,7 +21,8 @@ int main(int argc, char *argv[])
 {
 	int rc ;
 	int Desc ;
-	int tm ; 
+	int tm ;
+	int choix;
 
 	u_long  IpSocket , IpServer;
 	u_short PortSocket, PortServer ; 
@@ -30,6 +31,8 @@ int main(int argc, char *argv[])
 	struct sockaddr_in sos ; /* s = serveur */
 	struct sockaddr_in sor ; /* r = remote */
 	struct Requete UneRequete ;
+	
+	
 
 	memset(&sthis,0,sizeof(struct sockaddr_in)) ;
 	memset(&sos,0,sizeof(struct sockaddr_in)) ; 
@@ -60,10 +63,14 @@ int main(int argc, char *argv[])
 	sos.sin_family = AF_INET ;
 	sos.sin_addr.s_addr= IpServer ;
 	sos.sin_port = htons(PortServer) ;
+	/* Début partie modifée */
 
-
-	UneRequete.Type = Question ; 
-	
+	UneRequete.Type = Question;
+	printf("Saisie numero de seance : ");
+	scanf("%d",&choix);
+	UneRequete.Reference = choix;
+		
+	/* Fin partie modifée*/
 
 	rc = SendDatagram(Desc,&UneRequete,sizeof(struct Requete) ,&sos ) ;
 
@@ -79,7 +86,10 @@ int main(int argc, char *argv[])
 	if ( rc == -1 )
 		die("ReceiveDatagram") ;
 	else
+	{
 		fprintf(stderr,"bytes recus:%d\n",rc) ;
+		fprintf(stderr,"Film:%s /t Realisateur:%s/n",UneRequete.Film,UneRequete.Realisateur);
+	}	
 
 	close(Desc) ;
 	return 1;
