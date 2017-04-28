@@ -53,3 +53,8 @@ git:
 	clear
 	clear
 	cd .. ; make -f makefile git
+
+pull:
+	clear
+	clear
+	cd ..; git pull
