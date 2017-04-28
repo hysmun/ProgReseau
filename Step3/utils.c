@@ -18,7 +18,7 @@ char ReadChar()
 fflush(stdin);
 fflush(stdout);
  char Tampon[80] ;
- fgets(Tampon,sizeof Tampon,stdin ) ;
+ Tampon[0] = (char)getchar();
  fflush(stdin);
 fflush(stdout);
  return Tampon[0] ;

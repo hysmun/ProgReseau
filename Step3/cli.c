@@ -108,7 +108,15 @@ int main(int argc, char *argv[])
 			else
 			{
 				fprintf(stderr,"bytes recus:%d\n",rc) ;
-				fprintf(stderr,"Film:%s\t\tRealisateur:%s\n",UneRequete.Film,UneRequete.Realisateur);
+				switch((int)UneRequete.Type)
+				{
+					case OK:
+						fprintf(stderr,"Film:%s\t\tRealisateur:%s\n",UneRequete.Film,UneRequete.Realisateur);
+						break;
+					case Fail:
+						printf("\n\n ERROR fail serv\n\n");
+						break;
+				}
 			}
 		}
 		i++;
