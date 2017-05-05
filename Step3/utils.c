@@ -177,7 +177,7 @@ void ListingFacture(char *NomFichier)
 char *ipString(struct sockaddr_in sor)
 {
 	char ctmp[255];
-	inet_ntop(AF_INET,(void*)&sor.sin_addr, ctmp, 255 );
+	return inet_ntop(AF_INET,(void*)&sor.sin_addr, ctmp, 255 );
 }
 
 
