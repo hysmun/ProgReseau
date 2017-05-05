@@ -172,9 +172,26 @@ void ListingFacture(char *NomFichier)
 	fflush(stdout);
 }
 
-void ListingAchat(char *NomFichier)
+void Achat(void)
 {
-
+	struct Seance UnRecord;
+	struct Facture UneFacture;
+	FILE *sortie;
+	char NomClient[20];
+	
+	
+	printf("Nom Client : ");
+	gets();
+	
+	
+	
+	if(sortie = fopen(FichSean,"r") == NULL)
+	{
+		fprintf(stderr,"Echec ouverture\n");
+		exit(0);
+	}
+	else
+		fprintf(stderr,"Ouverture reussie\n");
 }
 
 

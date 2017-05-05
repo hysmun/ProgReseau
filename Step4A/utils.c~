@@ -172,6 +172,25 @@ void ListingFacture(char *NomFichier)
 	fflush(stdout);
 }
 
+void Achat(void)
+{
+	struct Seance UnRecord;
+	struct Facture UneFacture;
+	FILE *sortie;
+	
+	printf("Nom Client : ");
+	gets();
+	
+	
+	
+	if(sortie = fopen(FichSean,"r") == NULL)
+	{
+		fprintf(stderr,"Echec ouverture\n");
+		exit(0);
+	}
+	else
+		fprintf(stderr,"Ouverture reussie\n");
+}
 
 
 char *ipString(struct sockaddr_in sor, char *ctmp)
