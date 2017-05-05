@@ -112,7 +112,7 @@ int main(int argc, char *argv[])
 				switch((int)UneRequete.Type)
 				{
 					case OK:
-						fprintf(stderr,"Film:%s\t\tRealisateur:%s\n",UneRequete.Film,UneRequete.Realisateur);
+						fprintf(stderr,"Film:%s\t\tRealisateur:%s\t\tPlaces:%d\n",UneRequete.Film,UneRequete.Realisateur,UneRequete.Places);
 						break;
 					case Fail:
 						printf("\n\n ERROR fail serv\n\n");
