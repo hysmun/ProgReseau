@@ -75,7 +75,7 @@ int main(int argc,char *argv[])
 				if(res == 1)
 					fprintf(stderr,"res:%d -- Reference:%s\n",res,UneSeance.Film);
 				else
-					exit(1);
+					printf(" ");
 				UneRequete.Type = OK ;
 				strcpy(UneRequete.Film,UneSeance.Film);
 				strcpy(UneRequete.Realisateur,UneSeance.Realisateur);

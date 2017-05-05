@@ -19,7 +19,7 @@ char ReadChar()
 fflush(stdin);
 fflush(stdout);
  char Tampon[80] ;
- Tampon[0] = (char)getchar();
+ scanf("%c", &Tampon[0]);
  fflush(stdin);
 fflush(stdout);
  return Tampon[0] ;
