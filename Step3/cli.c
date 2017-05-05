@@ -69,9 +69,9 @@ int main(int argc, char *argv[])
 	while(choix != 'q')
 	{
 		printf("----------------------    %d\n", i) ;
-		printf("1)demander une reference\n");
+		printf("1) Demander une reference\n");
 		printf("6) A propos           \n") ;
-		printf("7) exit               \n") ; 
+		printf("7) Exit               \n") ; 
 		printf("----------------------\n") ;
 		choix=ReadChar() ;
 		switch(choix)
