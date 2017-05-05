@@ -44,8 +44,9 @@ int Recherche(char* NomFichier, int Reference, Seance *UnRecord)
 		ret = fread(UnRecord, sizeof(Seance), 1, fp);			
 	}
 	AfficheLog("Reccord non trouver");
+	UnRecord = NULL;
 	fclose(fp);
-	return 0;
+	return -1;
 }
 
 
