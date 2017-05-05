@@ -172,10 +172,6 @@ void ListingFacture(char *NomFichier)
 	fflush(stdout);
 }
 
-void ListingAchat(char *NomFichier)
-{
-
-}
 
 
 char *ipString(struct sockaddr_in sor, char *ctmp)
