@@ -8,9 +8,12 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <arpa/inet.h>
+
 #include "../udplib/udplib.h"
 #include "structure.h"
 #include "data.h"
+#include "utils.h"
 #include "lib2016BM.h"
 
 void die(char *s);
@@ -61,6 +64,8 @@ int main(int argc,char *argv[])
 			die("ReceiveDatagram") ;
 		else
 			fprintf(stderr,"bytes recus:%d Reference :%d\n",rc,UneRequete.Reference ) ;
+		
+		//printf("Receuived packed from %s:%d",ipString(sor),100);
 		send = 0;
 		switch((int)UneRequete.Type)
 		{
