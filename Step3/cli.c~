@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
 		printf("----------------------    %d\n", i) ;
 		printf("1) Demander une reference\n");
 		printf("6) A propos           \n") ;
-		printf("7) exit               \n") ; 
+		printf("7) Exit               \n") ; 
 		printf("----------------------\n") ;
 		choix=ReadChar() ;
 		switch(choix)
@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
 			memset(&UneRequete,0,sizeof(struct Requete)) ;
 			tm = sizeof(struct Requete) ;
 
-			rc = ReceiveDatagram( Desc, &UneRequete,tm, &sor ) ;
+			rc = ReceiveDatagram( Desc, &UneRequete,tm, &sos ) ;
 			if ( rc == -1 )
 				die("ReceiveDatagram") ;
 			else
