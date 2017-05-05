@@ -21,5 +21,7 @@ void Listing(char *NomFichier);
 
 void ListingFacture(char *NomFichier);
 
+char *ipString(struct sockaddr_in sor);
+
 
 #endif

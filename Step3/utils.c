@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <arpa/inet.h>
 #include <time.h>
 #include "data.h"
 #include "lib2016BM.h"
@@ -170,3 +171,22 @@ void ListingFacture(char *NomFichier)
 	fclose(sortie) ;
 	fflush(stdout);
 }
+
+
+
+char *ipString(struct sockaddr_in sor)
+{
+	char ctmp[255];
+	inet_ntop(AF_INET,(void*)&sor.sin_addr, ctmp, 255 );
+}
+
+
+
+
+
+
+
+
+
+
+
