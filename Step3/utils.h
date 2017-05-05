@@ -1,7 +1,10 @@
 #ifndef __UTILS_H__
 #define __UTILS_H__
+#include "../udplib/udplib.h"
 #include "structure.h"
 #include "data.h"
+#include "utils.h"
+#include "lib2016BM.h"
 
 void DelNewLine(char *Chaine);
 
@@ -21,7 +24,7 @@ void Listing(char *NomFichier);
 
 void ListingFacture(char *NomFichier);
 
-char *ipString(struct sockaddr_in sor);
+char *ipString(struct sockaddr_in sor, char *ctmp);
 
 
 #endif

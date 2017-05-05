@@ -1,12 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
+
+#include <time.h>
+
 #include <string.h>
 #include <arpa/inet.h>
-#include <time.h>
-#include "data.h"
-#include "lib2016BM.h"
-#include "utils.h"
+
+#include "../udplib/udplib.h"
 #include "structure.h"
+#include "data.h"
+#include "utils.h"
+#include "lib2016BM.h"
 
 
 void DelNewLine(char *Chaine)
@@ -16,12 +20,8 @@ void DelNewLine(char *Chaine)
 
 char ReadChar()
 {
-fflush(stdin);
-fflush(stdout);
  char Tampon[80] ;
- scanf("%c", &Tampon[0]);
- fflush(stdin);
-fflush(stdout);
+ fgets(Tampon,sizeof Tampon,stdin ) ;
  return Tampon[0] ;
 } 
 
@@ -174,10 +174,11 @@ void ListingFacture(char *NomFichier)
 
 
 
-char *ipString(struct sockaddr_in sor)
+char *ipString(struct sockaddr_in sor, char *ctmp)
 {
-	char ctmp[255];
-	return inet_ntop(AF_INET,(void*)&sor.sin_addr, ctmp, 255 );
+	inet_ntop(AF_INET,(void*)&sor.sin_addr, ctmp, 255 );
+	sprintf(ctmp, "%s:%hd",ctmp, sor.sin_port );
+	return ctmp;
 }
 
 

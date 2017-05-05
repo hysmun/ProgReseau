@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 	int tm ;
 	int choix = '0';
 	int i=0;
-
+	char ctmp[255];
 	u_long  IpSocket , IpServer;
 	u_short PortSocket, PortServer ; 
 
@@ -68,19 +68,19 @@ int main(int argc, char *argv[])
 
 	while(choix != 'q')
 	{
-		printf("----------------------    %d\n", i) ;
+		printf("----------------------    \n") ;
 		printf("1) Demander une reference\n");
 		printf("6) A propos           \n") ;
 		printf("7) Exit               \n") ; 
 		printf("----------------------\n") ;
-		choix=ReadChar() ;
+		choix=ReadChar();
 		switch(choix)
 		{
 			case '1':
 				UneRequete.Type = Question;
 				printf("Saisie numero de seance : ");
-				
-				scanf("%d",&choix);
+				fgets(ctmp,sizeof ctmp,stdin );
+				choix = atoi(ctmp);
 				UneRequete.Reference = choix;
 				break;
 			case '6':

@@ -24,6 +24,7 @@ int main(int argc,char *argv[])
 	int Desc ;
 	int res;
 	int send = 0;
+	char ctmp[255];
 	struct sockaddr_in sthis ; /* this ce programme */
 	struct sockaddr_in sos ; /* s = serveur */
 	struct sockaddr_in sor ; /* r = remote */
@@ -65,7 +66,7 @@ int main(int argc,char *argv[])
 		else
 			fprintf(stderr,"bytes recus:%d Reference :%d\n",rc,UneRequete.Reference ) ;
 		
-		//printf("Receuived packed from %s:%d",ipString(sor),100);
+		printf("Receuived packed from %s\n",ipString(sor, ctmp));
 		send = 0;
 		switch((int)UneRequete.Type)
 		{
