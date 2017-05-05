@@ -66,7 +66,7 @@ int main(int argc,char *argv[])
 		else
 			fprintf(stderr,"bytes recus:%d Reference :%d\n",rc,UneRequete.Reference ) ;
 		
-		//printf("Receuived packed from %s\n",ipString(sor, ctmp));
+		printf("Receuived packed from %s\n",ipString(sor, ctmp));
 		send = 0;
 		switch((int)UneRequete.Type)
 		{
