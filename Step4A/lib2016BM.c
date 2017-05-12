@@ -60,7 +60,6 @@ int Reservation(char* NomFichier,int Reference ,int Quantite )
 	Seance tmp;
 	int placefichier = Recherche(NomFichier, Reference, &tmp );
 	
-	int i, ret;
 	FILE *fp = fopen(NomFichier, "rb");
 	
 	if(fp == NULL)
@@ -87,11 +86,28 @@ int Reservation(char* NomFichier,int Reference ,int Quantite )
 	}
 	
 	fclose(fp);
-	return 0;
+	return Quantite;
 }
 
 int Facturation(char NomFichier[80], char NomClient[60], int Date,int Quantite,int Reference)
 {
+	FILE *fp = fopen(NomFichier, "ab");
+	
+	if(fp == NULL)
+	{
+		AfficheLog("Erreur ouverture fichier");
+		return -1;
+	}
+	Facture UneFacture;
+	UneFacture.NumeroFacturation = ftell(fp) / sizeof(Facture) + 1;
+	sprintf(UneFacture.NomClient, "%s", NomClient);
+	UneFacture.DateFacturation = Date;
+	UneFacture.Places = Quantite;
+	UneFacture.Reference = Reference;
+	
+	fwrite(&UneFacture, sizeof(Facture), 1, fp);
+	
+	fclose(fp);
 	return 0;
 }
 
