@@ -73,7 +73,7 @@ int main(int argc,char *argv[])
 			case Question:
 				printf("Type recu %d\n", UneRequete.Type) ;
 				res = Recherche("Seances",UneRequete.Reference,&UneSeance);
-				if(res == 1)
+				if(res != -1)
 					fprintf(stderr,"res:%d -- Reference:%s -- Realisateur:%s -- Quantite :%d\n",res,UneSeance.Film,UneSeance.Realisateur,UneSeance.Places);
 				else
 				{

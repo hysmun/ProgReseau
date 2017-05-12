@@ -38,6 +38,7 @@ int Recherche(char* NomFichier, int Reference, Seance *UnRecord)
 	{
 		if(UnRecord->Reference == Reference)
 		{
+			fclose(fp);
 			AfficheLog("trouver");
 			return i;
 		}	
