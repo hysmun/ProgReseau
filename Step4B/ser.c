@@ -88,7 +88,7 @@ int main(int argc,char *argv[])
 				send = 1;
 				break;
 			case Achat:
-				if(Reservation("Factures", UneRequete.Reference, UneRequete.Places) < 1)
+				if(Reservation("Seances", UneRequete.Reference, UneRequete.Places) < 1)
 				{
 					printf("Erreur reservation !!!\n");
 					break;
