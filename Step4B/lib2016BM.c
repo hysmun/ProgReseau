@@ -108,7 +108,7 @@ int Facturation(char NomFichier[80], char NomClient[60], int Date,int Quantite,i
 	fwrite(&UneFacture, sizeof(Facture), 1, fp);
 	
 	fclose(fp);
-	return 0;
+	return UneFacture.NumeroFacturation;
 }
 
 void PAchat(char* FichSean,char* FichFact)

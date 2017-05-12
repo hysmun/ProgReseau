@@ -75,7 +75,7 @@ void CreationAjoutFichier(char *NomFichier,struct Seance  *UnRecord )
 	if ( sortie == NULL )
 	{
 		fprintf(stderr,"Echec Ouverture\n") ;
-		return 0 ;
+		return  ;
 	}
 	else
 		fprintf(stderr,"Ouverture reussie \n") ;

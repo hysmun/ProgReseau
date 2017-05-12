@@ -87,6 +87,18 @@ int main(int argc,char *argv[])
 				UneRequete.Places = UneSeance.Places;
 				send = 1;
 				break;
+			case Achat:
+				if(Reservation("Factures", UneRequete.Reference, UneRequete.Places) < 1)
+				{
+					printf("Erreur reservation !!!\n");
+					break;
+				}
+				UneRequete.NumeroFacture = Facturation("Factures", UneRequete.NomClient, UneRequete.Date, UneRequete.Places, UneRequete.Reference);
+				
+				send = 1;
+				break;
+			case Livraison:
+				break;
 			case Fail:
 				UneRequete.Type = Fail ;
 				printf("\n\n ERROR envois de FAIL \n\n");
