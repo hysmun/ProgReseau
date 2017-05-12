@@ -39,7 +39,7 @@ int Recherche(char* NomFichier, int Reference, Seance *UnRecord)
 		if(UnRecord->Reference == Reference)
 		{
 			AfficheLog("trouver");
-			return 1;
+			return i;
 		}	
 		ret = fread(UnRecord, sizeof(Seance), 1, fp);			
 	}
@@ -49,8 +49,51 @@ int Recherche(char* NomFichier, int Reference, Seance *UnRecord)
 	return -1;
 }
 
+int Reservation(char* NomFichier,int Reference ,int Quantite )
+{
+	if(NomFichier == NULL || Reference < 1)
+	{
+		AfficheLog("Erreur param Reservation()");
+		return -1;
+	}
+	
+	Seance tmp;
+	int placefichier = Recherche(NomFichier, Reference, &tmp );
+	
+	int i, ret;
+	FILE *fp = fopen(NomFichier, "rb");
+	
+	if(fp == NULL)
+	{
+		AfficheLog("Erreur ouverture fichier");
+		return -1;
+	}
+	//AfficheLog("Ouverture reussie");
+	fseek(fp, 0, SEEK_SET);
+	
+	if(tmp.Places < 0)
+	{
+		return -1;
+	}
+	if(tmp.Places < Quantite)
+	{
+		return 0;
+	}
+	else
+	{
+		tmp.Places = tmp.Places - Quantite;
+		fseek(fp, placefichier * sizeof(Seance), SEEK_SET);
+		fwrite(&tmp, sizeof(Seance), 1, fp );
+	}
+	
+	fclose(fp);
+	return 0;
+}
 
-
+int Facturation(char NomFichier[80], char NomClient[60], int Date,int Quantite,int Reference)
+{
+	return 0;
+}
 
 
 
