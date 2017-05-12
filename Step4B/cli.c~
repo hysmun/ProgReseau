@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
 				printf("Places : ");
 				fgets(ctmp,sizeof(ctmp),stdin);
 				UneRequete.Places = atoi(ctmp);
-				break;
+				
 			case '6':
 				break;
 			case '7':
