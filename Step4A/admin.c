@@ -68,7 +68,7 @@ int main()
 			case '4':
 				PAchat("Seances","Factures");
 			case '5': 
-				ListingFacture("Facture") ;
+				ListingFacture("Factures") ;
 				break ;
 			case '6': 
 				APropos("Step 4A","Brajkovic Antoine","Mauhin Remy") ;

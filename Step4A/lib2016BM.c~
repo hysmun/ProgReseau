@@ -135,7 +135,7 @@ void PAchat(char* FichSean,char* FichFact)
 		fprintf(stderr,"Erreur de reservation\n");
 		return;
 	}
-	if(Facturation(FichFact,NomClient,0,NbPla,Ref) == -1)
+	if((Facturation(FichFact,NomClient,0,NbPla,Ref) == -1)
 	{
 		fprintf(stderr,"Erreur de facturation\n");
 		return;

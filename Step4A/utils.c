@@ -172,42 +172,6 @@ void ListingFacture(char *NomFichier)
 	fflush(stdout);
 }
 
-void PAchat(char* FichSean,char* FichFact)
-{
-	struct Seance UnRecord;
-	struct Facture UneFacture;
-	FILE *sortie;
-	char NomClient[20];
-	char RefBuf[20];
-	char NbPlaces[20];
-	int Ref = 0;
-	int NbPla = 0;
-	
-	fflush(stdin);
-	printf("Nom Client : ");
-	fgets(NomClient,sizeof(NomClient),stdin);
-	fflush(stdin);
-	printf("Reference : ");
-	fgets(RefBuf,sizeof(RefBuf),stdin);
-	Ref = atoi(RefBuf);
-	fflush(stdin);
-	printf("Nombre places : ");
-	fgets(NbPlaces,sizeof(NbPlaces),stdin);
-	NbPla = atoi(NbPlaces);
-	if((Reservation(FichSean,Ref,NbPla) < 1)
-	{
-		fprintf(stderr,"Erreur de reservation\n");
-		return;
-	}
-	if((Facturation(FichFact,NomClient,0,NbPla,Ref) == -1)
-	{
-		fprintf(stderr,"Erreur de facturation\n");
-		return;
-	}
-	
-}
-
-
 char *ipString(struct sockaddr_in sor, char *ctmp)
 {
 	inet_ntop(AF_INET,(void*)&sor.sin_addr, ctmp, 255 );
