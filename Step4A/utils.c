@@ -194,48 +194,17 @@ void PAchat(char* FichSean,char* FichFact)
 	printf("Nombre places : ");
 	fgets(NbPlaces,sizeof(NbPlaces),stdin);
 	NbPla = atoi(NbPlaces);
-	
-	if((sortie = fopen(FichSean,"r+b")) == NULL)
+	if((Reservation(FichSean,Ref,NbPla) < 1)
 	{
-		fprintf(stderr,"Echec ouverture\n");
-		exit(0);
+		fprintf(stderr,"Erreur de reservation\n");
+		return;
 	}
-	else
-		fprintf(stderr,"Ouverture reussie\n");
-	fseek(sortie,0,SEEK_SET);
-	
-	fread(&UnRecord,sizeof(struct Seance),1,sortie);
-	while((fread(&UnRecord,sizeof(struct Seance),1,sortie)) == 1)
+	if((Facturation(FichFact,NomClient,0,NbPla,Ref) == -1)
 	{
-		if(UnRecord.Reference == Ref)
-		{
-			fprintf(stderr,"Trouve Reference %s %d\n",UnRecord.Film,UnRecord.Reference);
-			fseek(sortie,-sizeof(struct Seance),SEEK_CUR);
-			if(NbPla > UnRecord.Places)
-			{
-				fprintf(stderr,"Erreur nombre de places\n");
-				exit(0);
-			}				
-			UnRecord.Places -= NbPla;
-			if(fwrite(&UnRecord,sizeof(struct Seance),1,sortie) == 1)
-				fprintf(stderr,"Record ecrit %d\n",UnRecord.Reference);
-			else
-			{
-				fprintf(stderr,"Erreur ecriture record\n");
-				exit(0);
-			}
-			fclose(sortie);
-			if((sortie = fopen(FichFact,"r+b")) == NULL)
-			{
-				fprintf(stderr,"Echec ouverture facturation\n");
-				exit(0);
-			}
-			else
-				fprintf(stderr,"Ouverture reussie de facturation\n");
-			UneFacture.NumeroFacturation = ftell(sortie);
-			break;
-		}
+		fprintf(stderr,"Erreur de facturation\n");
+		return;
 	}
+	
 }
 
 
