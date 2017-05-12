@@ -172,26 +172,70 @@ void ListingFacture(char *NomFichier)
 	fflush(stdout);
 }
 
-void Achat(void)
+void PAchat(char* FichSean,char* FichFact)
 {
 	struct Seance UnRecord;
 	struct Facture UneFacture;
 	FILE *sortie;
 	char NomClient[20];
+	char RefBuf[20];
+	char NbPlaces[20];
+	int Ref = 0;
+	int NbPla = 0;
 	
-	
+	fflush(stdin);
 	printf("Nom Client : ");
-	gets();
+	fgets(NomClient,sizeof(NomClient),stdin);
+	fflush(stdin);
+	printf("Reference : ");
+	fgets(RefBuf,sizeof(RefBuf),stdin);
+	Ref = atoi(RefBuf);
+	fflush(stdin);
+	printf("Nombre places : ");
+	fgets(NbPlaces,sizeof(NbPlaces),stdin);
+	NbPla = atoi(NbPlaces);
 	
-	
-	
-	if(sortie = fopen(FichSean,"r") == NULL)
+	if((sortie = fopen(FichSean,"r+b")) == NULL)
 	{
 		fprintf(stderr,"Echec ouverture\n");
 		exit(0);
 	}
 	else
 		fprintf(stderr,"Ouverture reussie\n");
+	fseek(sortie,0,SEEK_SET);
+	
+	fread(&UnRecord,sizeof(struct Seance),1,sortie);
+	while((fread(&UnRecord,sizeof(struct Seance),1,sortie)) == 1)
+	{
+		if(UnRecord.Reference == Ref)
+		{
+			fprintf(stderr,"Trouve Reference %s %d\n",UnRecord.Film,UnRecord.Reference);
+			fseek(sortie,-sizeof(struct Seance),SEEK_CUR);
+			if(NbPla > UnRecord.Places)
+			{
+				fprintf(stderr,"Erreur nombre de places\n");
+				exit(0);
+			}				
+			UnRecord.Places -= NbPla;
+			if(fwrite(&UnRecord,sizeof(struct Seance),1,sortie) == 1)
+				fprintf(stderr,"Record ecrit %d\n",UnRecord.Reference);
+			else
+			{
+				fprintf(stderr,"Erreur ecriture record\n");
+				exit(0);
+			}
+			fclose(sortie);
+			if((sortie = fopen(FichFact,"r+b")) == NULL)
+			{
+				fprintf(stderr,"Echec ouverture facturation\n");
+				exit(0);
+			}
+			else
+				fprintf(stderr,"Ouverture reussie de facturation\n");
+			UneFacture.NumeroFacturation = ftell(sortie);
+			break;
+		}
+	}
 }
 
 

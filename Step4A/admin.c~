@@ -66,12 +66,12 @@ int main()
 				AfficheRecord(&UnRecord);
 				break;
 			case '4':
-				ListingAchat("Seances","Factures");
+				Achat("Seances","Factures");
 			case '5': 
 				ListingFacture("Facture") ;
 				break ;
 			case '6': 
-				APropos("Step 2","Brajkovic Antoine","Mauhin Remy") ;
+				APropos("Step 4A","Brajkovic Antoine","Mauhin Remy") ;
 				break ;
 			case '7': 
 				exit(0) ; 

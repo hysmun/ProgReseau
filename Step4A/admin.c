@@ -66,7 +66,7 @@ int main()
 				AfficheRecord(&UnRecord);
 				break;
 			case '4':
-				ListingAchat("Seances","Factures");
+				PAchat("Seances","Factures");
 			case '5': 
 				ListingFacture("Facture") ;
 				break ;

@@ -24,7 +24,7 @@ void Listing(char *NomFichier);
 
 void ListingFacture(char *NomFichier);
 
-void ListingAchat(char *NomFichier);
+void Achat(char* FichSean,char* FichFact);
 
 char *ipString(struct sockaddr_in sor, char *ctmp);
 
