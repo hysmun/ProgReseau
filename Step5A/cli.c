@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 	int tm ;
 	int choix = '0';
 	int i=0, y, num;
-	int resend = true;
+	int resend = TRUE;
 	
 	char ctmp[255];
 	u_long  IpSocket , IpServer;
@@ -41,6 +41,11 @@ int main(int argc, char *argv[])
 	struct Requete UneRequete ;
 	
 	srand((unsigned)time(NULL));
+	
+	
+	sigset_t mask, unmask;
+	sigfillset(&mask);
+	sigprocmask(SIG_SETMASK, &mask, &unmask);
 
 	memset(&sthis,0,sizeof(struct sockaddr_in)) ;
 	memset(&sos,0,sizeof(struct sockaddr_in)) ; 
@@ -115,10 +120,12 @@ int main(int argc, char *argv[])
 		/* Fin partie modifée*/
 		if(choix != 'q')
 		{
-			for(;resend == true;)
+			sigprocmask(SIG_SETMASK, &unmask, NULL);
+			for(resend = TRUE;resend == TRUE;)
 			{
 				rc = SendDatagram(Desc,&UneRequete,sizeof(struct Requete) ,&sos ) ;
-
+				i++;
+				alarm(8);
 				if ( rc == -1 )
 					die("SendDatagram") ;
 				else
@@ -126,29 +133,41 @@ int main(int argc, char *argv[])
 
 				memset(&UneRequete,0,sizeof(struct Requete)) ;
 				tm = sizeof(struct Requete) ;
-
-				rc = ReceiveDatagram( Desc, &UneRequete,tm, &sor ) ;
-				if ( rc == -1 )
-					die("ReceiveDatagram") ;
-				else
+				
+				for(y=0; y!= i; y++)
 				{
-					fprintf(stderr,"bytes recus:%d\n",rc) ;
-					switch((int)UneRequete.Type)
+					rc = ReceiveDatagram( Desc, &UneRequete,tm, &sor ) ;
+					sigprocmask(SIG_SETMASK, &mask, NULL);
+					alarm(0);
+					resend = FALSE;
+					if ( rc == -1 )
+						die("ReceiveDatagram") ;
+					else
 					{
-						case Question:
-							fprintf(stderr,"Film:%s\t\tRealisateur:%s\t\tPlaces:%d\n",UneRequete.Film,UneRequete.Realisateur,UneRequete.Places);
-							break;
-						case Achat:
-						
-							break;
-						case Fail:
-							printf("\n\n ERROR fail serv\n\n");
-							break;
-					}//fin switch type
-				}//fin else rc
+						fprintf(stderr,"bytes recus:%d\n",rc) ;
+						switch((int)UneRequete.Type)
+						{
+							case Question:
+								fprintf(stderr,"Film:%s\t\tRealisateur:%s\t\tPlaces:%d\n",UneRequete.Film,UneRequete.Realisateur,UneRequete.Places);
+								break;
+							case Achat:
+								if(num == UneRequete.Numero)
+								{
+									printf("Double");
+								}
+								else
+								{
+									printf("Achat reussi Facture: %d", UneRequete.NumeroFacture);
+								}
+								break;
+							case Fail:
+								printf("\n\n ERROR fail serv\n\n");
+								break;
+						}//fin switch type
+					}//fin else rc
+				}
 			}//for
 		}
-		i++;
 		UneRequete.Type = Fail;
 	}
 

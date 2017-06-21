@@ -24,4 +24,7 @@ typedef struct Requete
 	char Realisateur[30];
 }Requete;
 
+#define 	TRUE 		(1)
+#define 	FALSE 	(0)
+
 #endif
