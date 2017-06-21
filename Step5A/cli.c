@@ -181,6 +181,9 @@ int main(int argc, char *argv[])
 							case Fail:
 								printf("\n\n ERROR fail serv\n\n");
 								break;
+							default:
+								printf("Erreur\n");
+								break;
 						}//fin switch type
 					}//fin else rc
 				}// for  receive

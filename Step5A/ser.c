@@ -101,6 +101,7 @@ int main(int argc,char *argv[])
 				send = 1;
 				break;
 			case Achat:
+				printf("Achat\n");
 				if(Reservation("Seances", UneRequete.Reference, UneRequete.Places) < 1)
 				{
 					printf("Erreur reservation !!!\n");
@@ -137,7 +138,7 @@ int main(int argc,char *argv[])
 			if ( rc == -1 )
 				printf("SendDatagram:") ;
 			else
-				fprintf(stderr,"bytes envoyes:%d\n",rc ) ;
+				printf("bytes envoyes:%d   --  %d\n",rc, (int)UneRequete.Type ) ;
 		}
 
 	}
