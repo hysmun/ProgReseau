@@ -16,6 +16,10 @@
 #include "structure.h"
 #include "utils.h"
 
+int interrupted = FALSE;
+
+void handlerSIGALRM(int sig);
+
 void die(char *s)
 {
     perror(s);
@@ -30,6 +34,7 @@ int main(int argc, char *argv[])
 	int choix = '0';
 	int i=0, y, num;
 	int resend = TRUE;
+	interrupted = FALSE;
 	
 	char ctmp[255];
 	u_long  IpSocket , IpServer;
@@ -46,6 +51,13 @@ int main(int argc, char *argv[])
 	sigset_t mask, unmask;
 	sigfillset(&mask);
 	sigprocmask(SIG_SETMASK, &mask, &unmask);
+	
+	struct sigaction sigAct;
+
+	sigAct.sa_handler = handlerSIGALRM;
+	sigAct.sa_flags = 0;
+	sigemptyset(&sigAct.sa_mask);
+	sigaction(SIGALRM,&sigAct,NULL); 
 
 	memset(&sthis,0,sizeof(struct sockaddr_in)) ;
 	memset(&sos,0,sizeof(struct sockaddr_in)) ; 
@@ -127,21 +139,27 @@ int main(int argc, char *argv[])
 				i++;
 				alarm(8);
 				if ( rc == -1 )
-					die("SendDatagram") ;
+					printf("SendDatagram") ;
 				else
 					fprintf(stderr,"Envoi de %d bytes\n",rc ) ;
 
-				memset(&UneRequete,0,sizeof(struct Requete)) ;
+				
 				tm = sizeof(struct Requete) ;
 				
 				for(y=0; y!= i; y++)
 				{
-					rc = ReceiveDatagram( Desc, &UneRequete,tm, &sor ) ;
+					rc = ReceiveDatagram( Desc, &UneRequete,tm, &sor );
+					if(interrupted == TRUE)
+					{
+						interrupted = FALSE;
+						break;
+					}
 					sigprocmask(SIG_SETMASK, &mask, NULL);
+					memset(&UneRequete,0,sizeof(struct Requete)) ;
 					alarm(0);
 					resend = FALSE;
 					if ( rc == -1 )
-						die("ReceiveDatagram") ;
+						printf("ReceiveDatagram") ;
 					else
 					{
 						fprintf(stderr,"bytes recus:%d\n",rc) ;
@@ -165,8 +183,8 @@ int main(int argc, char *argv[])
 								break;
 						}//fin switch type
 					}//fin else rc
-				}
-			}//for
+				}// for  receive
+			}//for generale
 		}
 		UneRequete.Type = Fail;
 	}
@@ -175,7 +193,11 @@ int main(int argc, char *argv[])
 	return 1;
 }
 
-
+void handlerSIGALRM(int sig)
+{
+	printf("interrupted system call \n");
+	interrupted = TRUE;
+}
 
 
 

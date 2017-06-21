@@ -76,11 +76,11 @@ int main(int argc,char *argv[])
 		tm = sizeof(struct Requete) ;
 		rc = ReceiveDatagram( Desc,&UneRequete ,tm, &sor ) ;
 		if ( rc == -1 )
-			die("ReceiveDatagram") ;
+			printf("ReceiveDatagram") ;
 		else
 			fprintf(stderr,"bytes recus:%d Reference :%d\n",rc,UneRequete.Reference ) ;
 		
-		printf("Received packed from %s\n",ipString(sor, ctmp));
+		printf("Received packed from %s   --   %d\n",ipString(sor, ctmp), (int)UneRequete.Type);
 		send = 0;
 		switch((int)UneRequete.Type)
 		{
@@ -117,6 +117,10 @@ int main(int argc,char *argv[])
 				printf("\n\n ERROR envois de FAIL \n\n");
 				send = 1;
 				break;
+			default:
+				UneRequete.Type = Fail;
+				send = 1;
+				break;
 		}
 		
 		/* attention l'enum peut être codé en short */
@@ -131,7 +135,7 @@ int main(int argc,char *argv[])
 		{
 			rc = SendDatagram(Desc,&UneRequete,sizeof(struct Requete) ,&sor ) ;
 			if ( rc == -1 )
-				die("SendDatagram:") ;
+				printf("SendDatagram:") ;
 			else
 				fprintf(stderr,"bytes envoyes:%d\n",rc ) ;
 		}
