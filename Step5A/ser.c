@@ -50,7 +50,7 @@ int main(int argc,char *argv[])
 	struct sigaction sigAct;
 
 	sigAct.sa_handler = handlerSIGSTOP;
-	sigAct.sa_flags = 0;
+	sigAct.sa_flags = SA_RESTART;
 	sigemptyset(&sigAct.sa_mask);
 	sigaction(SIGINT,&sigAct,NULL);  
 

@@ -28,7 +28,9 @@ int main(int argc, char *argv[])
 	int Desc ;
 	int tm ;
 	int choix = '0';
-	int i=0;
+	int i=0, y, num;
+	int resend = true;
+	
 	char ctmp[255];
 	u_long  IpSocket , IpServer;
 	u_short PortSocket, PortServer ; 
@@ -38,7 +40,7 @@ int main(int argc, char *argv[])
 	struct sockaddr_in sor ; /* r = remote */
 	struct Requete UneRequete ;
 	
-	
+	srand((unsigned)time(NULL));
 
 	memset(&sthis,0,sizeof(struct sockaddr_in)) ;
 	memset(&sos,0,sizeof(struct sockaddr_in)) ; 
@@ -100,6 +102,8 @@ int main(int argc, char *argv[])
 				fgets(ctmp,sizeof(ctmp),stdin);
 				UneRequete.Places = atoi(ctmp);
 				UneRequete.Date = 0;
+				num = (rand()%(100000000-1))+1;
+				UneRequete.Numero = num;
 				break;
 			case '6':
 				break;
@@ -111,32 +115,38 @@ int main(int argc, char *argv[])
 		/* Fin partie modifée*/
 		if(choix != 'q')
 		{
-			rc = SendDatagram(Desc,&UneRequete,sizeof(struct Requete) ,&sos ) ;
-
-			if ( rc == -1 )
-				die("SendDatagram") ;
-			else
-				fprintf(stderr,"Envoi de %d bytes\n",rc ) ;
-
-			memset(&UneRequete,0,sizeof(struct Requete)) ;
-			tm = sizeof(struct Requete) ;
-
-			rc = ReceiveDatagram( Desc, &UneRequete,tm, &sor ) ;
-			if ( rc == -1 )
-				die("ReceiveDatagram") ;
-			else
+			for(;resend == true;)
 			{
-				fprintf(stderr,"bytes recus:%d\n",rc) ;
-				switch((int)UneRequete.Type)
+				rc = SendDatagram(Desc,&UneRequete,sizeof(struct Requete) ,&sos ) ;
+
+				if ( rc == -1 )
+					die("SendDatagram") ;
+				else
+					fprintf(stderr,"Envoi de %d bytes\n",rc ) ;
+
+				memset(&UneRequete,0,sizeof(struct Requete)) ;
+				tm = sizeof(struct Requete) ;
+
+				rc = ReceiveDatagram( Desc, &UneRequete,tm, &sor ) ;
+				if ( rc == -1 )
+					die("ReceiveDatagram") ;
+				else
 				{
-					case OK:
-						fprintf(stderr,"Film:%s\t\tRealisateur:%s\t\tPlaces:%d\n",UneRequete.Film,UneRequete.Realisateur,UneRequete.Places);
-						break;
-					case Fail:
-						printf("\n\n ERROR fail serv\n\n");
-						break;
-				}
-			}
+					fprintf(stderr,"bytes recus:%d\n",rc) ;
+					switch((int)UneRequete.Type)
+					{
+						case Question:
+							fprintf(stderr,"Film:%s\t\tRealisateur:%s\t\tPlaces:%d\n",UneRequete.Film,UneRequete.Realisateur,UneRequete.Places);
+							break;
+						case Achat:
+						
+							break;
+						case Fail:
+							printf("\n\n ERROR fail serv\n\n");
+							break;
+					}//fin switch type
+				}//fin else rc
+			}//for
 		}
 		i++;
 		UneRequete.Type = Fail;
