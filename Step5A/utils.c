@@ -5,6 +5,7 @@
 
 #include <string.h>
 #include <arpa/inet.h>
+#include <pthread.h>
 
 #include "../udplib/udplib.h"
 #include "structure.h"
@@ -179,7 +180,19 @@ char *ipString(struct sockaddr_in sor, char *ctmp)
 	return ctmp;
 }
 
+int waitTime(int sec, long nsec)
+{
+	if(sec < 0 || nsec < 0 || nsec > 999999999)
+	{
+		printf("Erreur nanosleep\n");
+		return -1;
+	}
 
+	struct timespec time;
+	time.tv_sec = sec;
+	time.tv_nsec = nsec;
+	return nanosleep(&time, NULL);
+}
 
 
 

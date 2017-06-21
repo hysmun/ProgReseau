@@ -28,5 +28,6 @@ void PAchat(char* FichSean,char* FichFact);
 
 char *ipString(struct sockaddr_in sor, char *ctmp);
 
+int waitTime(int sec, long nsec);
 
 #endif

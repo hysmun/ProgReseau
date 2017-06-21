@@ -9,6 +9,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <arpa/inet.h>
+#include <unistd.h>
+#include <signal.h>
+#include <pthread.h>
+#include <time.h>
+#include <limits.h>
 
 #include "../udplib/udplib.h"
 #include "structure.h"
@@ -17,6 +22,7 @@
 #include "lib2016BM.h"
 
 void die(char *s);
+void handlerSIGSTOP(int sig);
 
 int main(int argc,char *argv[])
 {
@@ -38,7 +44,15 @@ int main(int argc,char *argv[])
 
 	memset(&sthis,0,sizeof(struct sockaddr_in)) ;
 	memset(&sos,0,sizeof(struct sockaddr_in)) ; 
-	memset(&sor,0,sizeof(struct sockaddr_in)) ; 
+	memset(&sor,0,sizeof(struct sockaddr_in)) ;
+	
+	
+	struct sigaction sigAct;
+
+	sigAct.sa_handler = handlerSIGSTOP;
+	sigAct.sa_flags = 0;
+	sigemptyset(&sigAct.sa_mask);
+	sigaction(SIGINT,&sigAct,NULL);  
 
 	printf("Ceci est le serveur\n") ;
 	if ( argc!=3)
@@ -81,7 +95,6 @@ int main(int argc,char *argv[])
 					send = 1;
 					break;
 				}
-				UneRequete.Type = OK ;
 				strcpy(UneRequete.Film,UneSeance.Film);
 				strcpy(UneRequete.Realisateur,UneSeance.Realisateur);
 				UneRequete.Places = UneSeance.Places;
@@ -134,3 +147,31 @@ void die(char *s)
     perror(s);
     exit(1);
 }
+
+void handlerSIGSTOP(int sig)
+{
+	printf("interrupted from CTRL Z\n");
+	waitTime(30, 0);
+	printf("fin du sleep\n");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
