@@ -155,7 +155,7 @@ int main(int argc, char *argv[])
 						break;
 					}
 					sigprocmask(SIG_SETMASK, &mask, NULL);
-					memset(&UneRequete,0,sizeof(struct Requete)) ;
+					//memset(&UneRequete,0,sizeof(struct Requete)) ;
 					alarm(0);
 					resend = FALSE;
 					if ( rc == -1 )
@@ -169,13 +169,13 @@ int main(int argc, char *argv[])
 								fprintf(stderr,"Film:%s\t\tRealisateur:%s\t\tPlaces:%d\n",UneRequete.Film,UneRequete.Realisateur,UneRequete.Places);
 								break;
 							case Achat:
-								if(num == UneRequete.Numero)
+								if(num == UneRequete.Numero && y != 0)
 								{
-									printf("Double");
+									printf("Double\n");
 								}
 								else
 								{
-									printf("Achat reussi Facture: %d", UneRequete.NumeroFacture);
+									printf("Achat reussi Facture: %d\n", UneRequete.NumeroFacture);
 								}
 								break;
 							case Fail:
@@ -187,7 +187,7 @@ int main(int argc, char *argv[])
 						}//fin switch type
 					}//fin else rc
 				}// for  receive
-			}//for generale
+			}//for resend
 		}
 		UneRequete.Type = Fail;
 	}
