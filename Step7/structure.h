@@ -13,6 +13,7 @@ typedef enum TypeRequete
 typedef struct Requete
 {
 	enum TypeRequete Type ;
+	int crc;
 	int Numero ;
 	int NumeroFacture ;
 	int Date ;
