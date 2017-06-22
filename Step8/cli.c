@@ -31,6 +31,7 @@ int main(int argc, char *argv[])
 	int rc ;
 	int Desc ;
 	int tm ;
+	int crc;
 	int choix = '0';
 	int i=0, y, num;
 	int resend = TRUE;
@@ -118,7 +119,9 @@ int main(int argc, char *argv[])
 				printf("Places : ");
 				fgets(ctmp,sizeof(ctmp),stdin);
 				UneRequete.Places = atoi(ctmp);
-				UneRequete.Date = 0;
+				printf("Date : ");
+				fgets(ctmp,sizeof(ctmp),stdin);
+				UneRequete.Date = atoi(ctmp);
 				num = (rand()%(100000000-1))+1;
 				UneRequete.Numero = num;
 				break;
@@ -132,11 +135,13 @@ int main(int argc, char *argv[])
 		/* Fin partie modifée*/
 		if(choix != 'q')
 		{
-			i=0;
 			sigprocmask(SIG_SETMASK, &unmask, NULL);
+			i=0;
+			crc = rand();
+			UneRequete.crc = crc;
 			for(resend = TRUE;resend == TRUE;)
 			{
-				printf("send");
+				printf("Send");
 				rc = SendDatagram(Desc,&UneRequete,sizeof(struct Requete) ,&sos ) ;
 				i++;
 				alarm(8);
@@ -165,7 +170,16 @@ int main(int argc, char *argv[])
 						printf("ReceiveDatagram") ;
 					else
 					{
-						fprintf(stderr,"bytes recus:%d\n",rc) ;
+						printf("Crc avant = %d  \taprès = %d\n", crc, UneRequete.crc);
+						if(UneRequete.crc != crc)
+						{
+							i=0;
+							y=0;
+							resend = FALSE;
+							break;
+						}
+						fprintf(stderr,"%d : bytes recus:%d\n",y,rc) ;
+						
 						switch((int)UneRequete.Type)
 						{
 							case Question:
@@ -191,12 +205,12 @@ int main(int argc, char *argv[])
 					}//fin else rc
 				}// for  receive
 			}//for resend
-		}
+		}//if choix == 'q'
 		UneRequete.Type = Fail;
 	}
 
 	close(Desc) ;
-	return 1;
+	exit(0);
 }
 
 void handlerSIGALRM(int sig)
