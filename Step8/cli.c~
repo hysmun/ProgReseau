@@ -7,18 +7,9 @@
 ------------------------------------------------------------------*/
 #include <stdio.h>
 #include <string.h>
-#include <unistd.h>
-#include <signal.h>
-#include <pthread.h>
-#include <time.h>
-#include <limits.h>
 #include "../udplib/udplib.h"
 #include "structure.h"
 #include "utils.h"
-
-int interrupted = FALSE;
-
-void handlerSIGALRM(int sig);
 
 void die(char *s)
 {
@@ -32,10 +23,7 @@ int main(int argc, char *argv[])
 	int Desc ;
 	int tm ;
 	int choix = '0';
-	int i=0, y, num;
-	int resend = TRUE;
-	interrupted = FALSE;
-	
+	int i=0;
 	char ctmp[255];
 	u_long  IpSocket , IpServer;
 	u_short PortSocket, PortServer ; 
@@ -45,19 +33,7 @@ int main(int argc, char *argv[])
 	struct sockaddr_in sor ; /* r = remote */
 	struct Requete UneRequete ;
 	
-	srand((unsigned)time(NULL));
 	
-	
-	sigset_t mask, unmask;
-	sigfillset(&mask);
-	sigprocmask(SIG_SETMASK, &mask, &unmask);
-	
-	struct sigaction sigAct;
-
-	sigAct.sa_handler = handlerSIGALRM;
-	sigAct.sa_flags = 0;
-	sigemptyset(&sigAct.sa_mask);
-	sigaction(SIGALRM,&sigAct,NULL); 
 
 	memset(&sthis,0,sizeof(struct sockaddr_in)) ;
 	memset(&sos,0,sizeof(struct sockaddr_in)) ; 
@@ -118,9 +94,6 @@ int main(int argc, char *argv[])
 				printf("Places : ");
 				fgets(ctmp,sizeof(ctmp),stdin);
 				UneRequete.Places = atoi(ctmp);
-				UneRequete.Date = 0;
-				num = (rand()%(100000000-1))+1;
-				UneRequete.Numero = num;
 				break;
 			case '6':
 				break;
@@ -132,111 +105,37 @@ int main(int argc, char *argv[])
 		/* Fin partie modifée*/
 		if(choix != 'q')
 		{
-			i=0;
-			sigprocmask(SIG_SETMASK, &unmask, NULL);
-			for(resend = TRUE;resend == TRUE;)
-			{
-				printf("send");
-				rc = SendDatagram(Desc,&UneRequete,sizeof(struct Requete) ,&sos ) ;
-				i++;
-				alarm(8);
-				if ( rc == -1 )
-					printf("SendDatagram") ;
-				else
-					fprintf(stderr,"Envoi de %d bytes\n",rc ) ;
+			rc = SendDatagram(Desc,&UneRequete,sizeof(struct Requete) ,&sos ) ;
 
-				
-				tm = sizeof(struct Requete) ;
-				
-				for(y=0; y!= i; y++)
+			if ( rc == -1 )
+				die("SendDatagram") ;
+			else
+				fprintf(stderr,"Envoi de %d bytes\n",rc ) ;
+
+			memset(&UneRequete,0,sizeof(struct Requete)) ;
+			tm = sizeof(struct Requete) ;
+
+			rc = ReceiveDatagram( Desc, &UneRequete,tm, &sor ) ;
+			if ( rc == -1 )
+				die("ReceiveDatagram") ;
+			else
+			{
+				fprintf(stderr,"bytes recus:%d\n",rc) ;
+				switch((int)UneRequete.Type)
 				{
-					printf("Receive");
-					rc = ReceiveDatagram( Desc, &UneRequete,tm, &sor );
-					if(interrupted == TRUE)
-					{
-						interrupted = FALSE;
+					case OK:
+						fprintf(stderr,"Film:%s\t\tRealisateur:%s\t\tPlaces:%d\n",UneRequete.Film,UneRequete.Realisateur,UneRequete.Places);
 						break;
-					}
-					sigprocmask(SIG_SETMASK, &mask, NULL);
-					//memset(&UneRequete,0,sizeof(struct Requete)) ;
-					alarm(0);
-					resend = FALSE;
-					if ( rc == -1 )
-						printf("ReceiveDatagram") ;
-					else
-					{
-						fprintf(stderr,"bytes recus:%d\n",rc) ;
-						switch((int)UneRequete.Type)
-						{
-							case Question:
-								fprintf(stderr,"Film:%s\t\tRealisateur:%s\t\tPlaces:%d\n",UneRequete.Film,UneRequete.Realisateur,UneRequete.Places);
-								break;
-							case Achat:
-								if(num == UneRequete.Numero && y != 0)
-								{
-									printf("Double\n");
-								}
-								else
-								{
-									printf("Achat reussi Facture: %d\n", UneRequete.NumeroFacture);
-								}
-								break;
-							case Fail:
-								printf("\n\n ERROR fail serv\n\n");
-								break;
-							default:
-								printf("Erreur\n");
-								break;
-						}//fin switch type
-					}//fin else rc
-				}// for  receive
-			}//for resend
+					case Fail:
+						printf("\n\n ERROR fail serv\n\n");
+						break;
+				}
+			}
 		}
+		i++;
 		UneRequete.Type = Fail;
 	}
 
 	close(Desc) ;
 	return 1;
 }
-
-void handlerSIGALRM(int sig)
-{
-	printf("interrupted system call \n");
-	interrupted = TRUE;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
