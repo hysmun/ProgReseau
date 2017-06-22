@@ -166,13 +166,13 @@ int VerifAchat(char * NomFichier, char *nomClient, int Date)
 	ret = fread(&fac, sizeof(Facture), 1, fp);
 	for(i=0; ret != 0; i++)
 	{
-		if(fac.NomClient == nomClient && fac.DateFacturation == Date)
+		if(strcmp(fac.NomClient,nomClient) == 0 && fac.DateFacturation == Date)
 		{
 			fclose(fp);
 			AfficheLog("trouver");
 			return fac.NumeroFacturation;
 		}	
-		ret = fread(&fac, sizeof(Seance), 1, fp);			
+		ret = fread(&fac, sizeof(Facture), 1, fp);			
 	}
 	AfficheLog("Reccord non trouver");
 	fclose(fp);
