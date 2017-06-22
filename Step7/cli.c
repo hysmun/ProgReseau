@@ -108,6 +108,8 @@ int main(int argc, char *argv[])
 				fgets(ctmp,sizeof ctmp,stdin );
 				choix = atoi(ctmp);
 				UneRequete.Reference = choix;
+				num = (rand()%(100000000-1))+1;
+				UneRequete.Numero = num;
 				break;
 			case '2':
 				UneRequete.Type = Achat;
@@ -183,7 +185,14 @@ int main(int argc, char *argv[])
 						switch((int)UneRequete.Type)
 						{
 							case Question:
-								fprintf(stderr,"Film:%s\t\tRealisateur:%s\t\tPlaces:%d\n",UneRequete.Film,UneRequete.Realisateur,UneRequete.Places);
+								if(num == UneRequete.Numero && y != 0)
+								{
+									printf("Double\n");
+								}
+								else
+								{
+									fprintf(stderr,"Film:%s\t\tRealisateur:%s\t\tPlaces:%d\n",UneRequete.Film,UneRequete.Realisateur,UneRequete.Places);
+								}
 								break;
 							case Achat:
 								if(num == UneRequete.Numero && y != 0)
