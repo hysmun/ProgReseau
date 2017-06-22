@@ -67,6 +67,7 @@ int main()
 				break;
 			case '4':
 				PAchat("Seances","Factures");
+				break;
 			case '5': 
 				ListingFacture("Factures") ;
 				break ;
